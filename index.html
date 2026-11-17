@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>메디랩코리아(주) | 자사 교육 사이트</title>
+<meta name="description" content="메디랩코리아(주) 인사팀 자사 교육 사이트">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{
+    --green:#1f8a5b; --green-dark:#146b45; --green-soft:#e8f5ee; --green-line:#bfe3cf;
+    --ink:#1d2621; --sub:#5b6660; --line:#e4e8e5; --gray-box:#f4f6f5; --white:#fff;
+    --radius:14px; --max:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Pretendard",-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;color:var(--ink);background:var(--white);font-size:16px;line-height:1.7;word-break:keep-all}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+
+  header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-weight:800;font-size:19px;letter-spacing:-.3px}
+  .logo span{color:var(--green)}
+  .menu{display:flex;gap:28px;font-size:15px;font-weight:600;color:var(--sub)}
+  .menu a:hover{color:var(--green)}
+  .menu .menu-cta{color:var(--white);background:var(--green);padding:8px 16px;border-radius:999px}
+  .menu .menu-cta:hover{background:var(--green-dark);color:var(--white)}
+
+  .hero{padding:72px 0 80px}
+  .hero-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center}
+  .eyebrow{display:inline-block;font-size:14px;font-weight:700;color:var(--green);background:var(--green-soft);padding:6px 14px;border-radius:999px;margin-bottom:20px}
+  .hero h1{font-size:clamp(40px,7vw,72px);line-height:1.15;font-weight:800;letter-spacing:-1.5px;margin-bottom:20px}
+  .hero h1 em{font-style:normal;color:var(--green)}
+  .hero p{font-size:18px;color:var(--sub);margin-bottom:32px}
+  .btn{display:inline-flex;align-items:center;gap:8px;background:var(--green);color:var(--white);font-weight:700;font-size:17px;padding:16px 30px;border-radius:12px;border:0;cursor:pointer;transition:background .15s}
+  .btn:hover{background:var(--green-dark)}
+  .btn-ghost{background:var(--white);color:var(--green);border:1.5px solid var(--green-line);margin-left:8px}
+  .btn-ghost:hover{background:var(--green-soft)}
+  .photo{background:#d5d9d7;border-radius:20px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;color:#7a827e;font-size:15px;font-weight:600}
+
+  section{scroll-margin-top:72px}
+  .sec{padding:80px 0}
+  .sec-gray{background:var(--gray-box)}
+  .sec-title{font-size:clamp(26px,4vw,36px);font-weight:800;letter-spacing:-.8px;margin-bottom:10px}
+  .sec-desc{color:var(--sub);margin-bottom:40px;font-size:17px}
+
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:28px 26px;transition:border-color .15s,transform .15s}
+  .card:hover{border-color:var(--green-line);transform:translateY(-2px)}
+  .num{font-size:15px;font-weight:800;color:var(--green);background:var(--green-soft);width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+  .card h3{font-size:20px;font-weight:700;margin-bottom:8px}
+  .card p{color:var(--sub);font-size:15px}
+  .card .card-photo{background:#d5d9d7;border-radius:10px;aspect-ratio:16/9;margin-top:18px;display:flex;align-items:center;justify-content:center;color:#7a827e;font-size:13px}
+
+  .info{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .info-box{background:var(--white);border-radius:var(--radius);padding:26px;border:1px solid var(--line)}
+  .info-box .label{font-size:14px;font-weight:700;color:var(--green);margin-bottom:6px}
+  .info-box .value{font-size:17px;font-weight:600}
+
+  .form-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:48px;align-items:start}
+  .contact-side .row{display:flex;gap:12px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .contact-side .row b{min-width:72px;color:var(--green)}
+  form{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:32px}
+  .field{margin-bottom:18px}
+  .field label{display:block;font-weight:700;font-size:15px;margin-bottom:6px}
+  .field label .req{color:var(--green)}
+  .field input,.field textarea{width:100%;font:inherit;font-size:16px;padding:13px 14px;border:1.5px solid var(--line);border-radius:10px;background:var(--white);color:var(--ink)}
+  .field input:focus,.field textarea:focus{outline:none;border-color:var(--green)}
+  .field textarea{min-height:140px;resize:vertical}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .count{text-align:right;font-size:13px;color:var(--sub);margin-top:4px}
+  .agree{background:var(--gray-box);border-radius:10px;padding:14px 16px;font-size:14px;color:var(--sub);margin-bottom:18px}
+  .agree label{display:flex;gap:10px;align-items:flex-start;color:var(--ink);font-weight:600;margin-top:8px;cursor:pointer}
+  .agree input{width:18px;height:18px;margin-top:3px;accent-color:var(--green)}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .form-btn{width:100%;justify-content:center}
+  .form-btn[disabled]{opacity:.6;cursor:wait}
+  .msg{margin-top:14px;font-size:15px;font-weight:600;min-height:1.5em}
+  .msg.ok{color:var(--green-dark)} .msg.err{color:#c0392b}
+
+  footer{background:#17201b;color:#b9c4be;padding:40px 0;font-size:14px}
+  footer b{color:var(--white);font-size:16px;display:block;margin-bottom:8px}
+
+  .float{position:fixed;right:22px;bottom:22px;z-index:30;background:var(--green);color:var(--white);font-weight:700;padding:15px 22px;border-radius:999px;box-shadow:0 8px 24px rgba(20,107,69,.28);display:flex;align-items:center;gap:8px}
+  .float:hover{background:var(--green-dark)}
+
+  @media (max-width:900px){
+    .hero-grid,.form-grid{grid-template-columns:1fr}
+    .cards,.info{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:640px){
+    .menu a:not(.menu-cta){display:none}
+    .hero{padding:44px 0 56px}
+    .hero p{font-size:16px}
+    .btn{width:100%;justify-content:center}
+    .btn-ghost{margin:10px 0 0}
+    .cards,.info,.two{grid-template-columns:1fr}
+    .sec{padding:56px 0}
+    form{padding:22px}
+    .float{right:14px;bottom:14px;padding:13px 18px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="logo">메디랩코리아<span>(주)</span></a>
+    <nav class="menu">
+      <a href="#courses">교육과정</a>
+      <a href="#guide">교육 안내</a>
+      <a href="#contact" class="menu-cta">문의하기</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">메디랩코리아(주) 인사팀</span>
+        <h1>자사 교육<br><em>사이트</em></h1>
+        <p>(입력 필요: 사이트 소개 문장)</p>
+        <a href="#contact" class="btn">교육 문의하기 →</a>
+        <a href="#courses" class="btn btn-ghost">교육과정 보기</a>
+      </div>
+      <div class="photo" role="img" aria-label="사진 자리">사진 자리</div>
+    </div>
+  </section>
+
+  <section id="courses" class="sec sec-gray">
+    <div class="wrap">
+      <h2 class="sec-title">교육과정</h2>
+      <p class="sec-desc">(입력 필요: 교육과정 안내 문장)</p>
+      <div class="cards">
+        <article class="card">
+          <div class="num">01</div>
+          <h3>(입력 필요: 과정명)</h3>
+          <p>(입력 필요: 과정 설명)</p>
+          <div class="card-photo">사진 자리</div>
+        </article>
+        <article class="card">
+          <div class="num">02</div>
+          <h3>(입력 필요: 과정명)</h3>
+          <p>(입력 필요: 과정 설명)</p>
+          <div class="card-photo">사진 자리</div>
+        </article>
+        <article class="card">
+          <div class="num">03</div>
+          <h3>(입력 필요: 과정명)</h3>
+          <p>(입력 필요: 과정 설명)</p>
+          <div class="card-photo">사진 자리</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="guide" class="sec">
+    <div class="wrap">
+      <h2 class="sec-title">교육 안내</h2>
+      <p class="sec-desc">교육 대상과 진행 방법을 확인해 주세요.</p>
+      <div class="info">
+        <div class="info-box" style="background:var(--gray-box);border:0">
+          <div class="label">교육 대상</div>
+          <div class="value">(입력 필요)</div>
+        </div>
+        <div class="info-box" style="background:var(--gray-box);border:0">
+          <div class="label">진행 방법</div>
+          <div class="value">(입력 필요)</div>
+        </div>
+        <div class="info-box" style="background:var(--gray-box);border:0">
+          <div class="label">담당 부서</div>
+          <div class="value">인사팀</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="sec sec-gray">
+    <div class="wrap form-grid">
+      <div class="contact-side">
+        <h2 class="sec-title">교육 상담·문의</h2>
+        <p class="sec-desc">문의를 남겨 주시면 인사팀에서 확인 후 연락드립니다.</p>
+        <div class="row"><b>담당</b><span>메디랩코리아(주) 인사팀</span></div>
+        <div class="row"><b>이메일</b><span>soyoungs2ly@gmail.com</span></div>
+        <div class="row"><b>전화</b><span>(입력 필요)</span></div>
+      </div>
+
+      <form id="inquiryForm" novalidate>
+        <div class="two">
+          <div class="field">
+            <label for="name">이름 <span class="req">*</span></label>
+            <input id="name" name="name" maxlength="30" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="dept">소속(부서)</label>
+            <input id="dept" name="dept" maxlength="50" autocomplete="organization">
+          </div>
+        </div>
+        <div class="field">
+          <label for="phone">연락처 <span class="req">*</span></label>
+          <input id="phone" name="phone" type="tel" maxlength="20" inputmode="tel" placeholder="010-0000-0000" autocomplete="tel" required>
+        </div>
+        <div class="field">
+          <label for="message">문의 내용 <span class="req">*</span></label>
+          <textarea id="message" name="message" maxlength="1000" required></textarea>
+          <div class="count"><span id="cnt">0</span> / 1000</div>
+        </div>
+        <div class="hp" aria-hidden="true">
+          <label for="website">웹사이트</label>
+          <input id="website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+        <div class="agree">
+          수집 항목: 이름, 소속, 연락처, 문의 내용 · 목적: 교육 문의 답변 · 보관 기간: (입력 필요)
+          <label><input type="checkbox" id="agree" name="agree"> 개인정보 수집·이용에 동의합니다 (필수)</label>
+        </div>
+        <button type="submit" class="btn form-btn" id="submitBtn">문의 보내기</button>
+        <p class="msg" id="formMsg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>메디랩코리아(주)</b>
+    인사팀 · 이메일 soyoungs2ly@gmail.com · 전화 (입력 필요)<br>
+    © 메디랩코리아(주)
+  </div>
+</footer>
+
+<a href="#contact" class="float" aria-label="문의하기">문의하기</a>
+
+<script>
+(function(){
+  var form=document.getElementById('inquiryForm');
+  var msg=document.getElementById('formMsg');
+  var btn=document.getElementById('submitBtn');
+  var startedAt=Date.now();
+  var ta=document.getElementById('message');
+  ta.addEventListener('input',function(){document.getElementById('cnt').textContent=ta.value.length});
+
+  function show(text,ok){msg.textContent=text;msg.className='msg '+(ok?'ok':'err')}
+
+  form.addEventListener('submit',async function(e){
+    e.preventDefault();
+    var d={
+      name:form.name.value.trim(),
+      dept:form.dept.value.trim(),
+      phone:form.phone.value.trim(),
+      message:form.message.value.trim(),
+      website:form.website.value,
+      agree:form.agree.checked,
+      startedAt:startedAt
+    };
+    if(!d.name){show('이름을 입력해 주세요.');form.name.focus();return}
+    if(!d.phone){show('연락처를 입력해 주세요.');form.phone.focus();return}
+    if(!/^[0-9\-+ ()]{7,20}$/.test(d.phone)){show('연락처는 숫자와 하이픈(-)으로 입력해 주세요.');form.phone.focus();return}
+    if(!d.message){show('문의 내용을 입력해 주세요.');form.message.focus();return}
+    if(!d.agree){show('개인정보 수집·이용에 동의해 주세요.');return}
+
+    btn.disabled=true;btn.textContent='보내는 중…';show('',true);
+    try{
+      var r=await fetch('/api/inquiry',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});
+      var j=await r.json().catch(function(){return {}});
+      if(r.ok&&j.ok){show('문의가 접수되었습니다. 확인 후 연락드리겠습니다.',true);form.reset();document.getElementById('cnt').textContent='0';startedAt=Date.now()}
+      else{show(j.error||'접수하지 못했습니다. 잠시 후 다시 시도해 주세요.')}
+    }catch(err){show('연결이 원활하지 않습니다. 잠시 후 다시 시도해 주세요.')}
+    btn.disabled=false;btn.textContent='문의 보내기';
+  });
+})();
+</script>
+</body>
+</html>
