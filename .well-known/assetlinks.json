@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.vercel.medilab_hrd.twa",
+      "sha256_cert_fingerprints": [
+        "4E:45:AC:47:45:96:4E:77:44:E7:94:FA:2A:66:88:65:CB:76:C9:39:0A:15:6E:79:26:D8:50:62:FF:36:EC:EA"
+      ]
+    }
+  }
+]
