@@ -93,13 +93,30 @@
   footer b{color:var(--white);font-size:16px;display:block;margin-bottom:8px}
 
 
+  /* 수료 확인 */
+  .check-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:28px;align-items:start}
+  .check-note{font-size:14px;color:var(--sub);margin:-4px 0 18px}
+  .result{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:28px;min-height:100%}
+  .result h3{font-size:18px;font-weight:700;margin-bottom:4px}
+  .result .hint{color:var(--sub);font-size:15px}
+  .result ul{list-style:none;margin-top:14px}
+  .result li{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 0;border-top:1px solid var(--line)}
+  .result li b{font-size:16px}
+  .result li small{display:block;color:var(--sub);font-size:14px;font-weight:500}
+  .chip{flex:none;font-size:14px;font-weight:700;padding:6px 12px;border-radius:999px;white-space:nowrap}
+  .chip.done{background:var(--green-soft);color:var(--green-dark)}
+  .chip.doing{background:#fff3d9;color:#7a4d00}
+  .chip.todo{background:#fdecea;color:#a8322a}
+  .chip.na{background:var(--gray-box);color:#4b5550}
   @media (max-width:900px){
     .hero-grid,.form-grid{grid-template-columns:1fr}
     .cards{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
     .card{padding:22px 18px}
   }
   @media (max-width:640px){
-    .menu a:not(.menu-cta){display:none}
+    .menu a:not(.menu-cta):not(.menu-keep){display:none}
+    .menu{gap:16px}
+    .check-grid{grid-template-columns:1fr}
     .hero{padding:44px 0 56px}
     .hero p{font-size:16px}
     .btn{width:100%;justify-content:center}
@@ -120,6 +137,7 @@
     <nav class="menu" aria-label="주요 메뉴">
       <a href="#courses">교육과정</a>
       <a href="#guide">교육 안내</a>
+      <a href="#check" class="menu-keep">수료 확인</a>
       <a href="#contact" class="menu-cta">문의하기</a>
     </nav>
   </div>
@@ -305,7 +323,33 @@
     </div>
   </section>
 
-  <section id="contact" class="sec sec-gray">
+  <section id="check" class="sec sec-gray">
+    <div class="wrap">
+      <h2 class="sec-title">수료 확인</h2>
+      <p class="sec-desc">이름과 생년월일을 입력하면 본인의 과정별 수료 현황을 볼 수 있습니다.</p>
+      <div class="check-grid">
+        <form id="checkForm" novalidate>
+          <div class="field">
+            <label for="c-name">이름 <span class="req">*</span></label>
+            <input id="c-name" name="name" maxlength="30" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="c-birth">생년월일 6자리 <span class="req">*</span></label>
+            <input id="c-birth" name="birth" maxlength="10" inputmode="numeric" pattern="[0-9]{6}" placeholder="예: 900115" autocomplete="off" required>
+          </div>
+          <p class="check-note">입력한 이름과 생년월일은 조회에만 쓰이고 저장되지 않습니다.</p>
+          <button type="submit" class="btn form-btn" id="checkBtn">수료 현황 조회</button>
+          <p class="msg" id="checkMsg" role="status" aria-live="polite"></p>
+        </form>
+        <div class="result" id="checkResult" aria-live="polite">
+          <h3>조회 결과</h3>
+          <p class="hint">이름과 생년월일을 입력하면 리더십 과정, 신입 사원 과정, 법정교육의 수료 여부가 여기에 표시됩니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="sec">
     <div class="wrap form-grid">
       <div class="contact-side">
         <h2 class="sec-title">교육 상담·문의</h2>
@@ -397,7 +441,50 @@
 })();
 </script>
 <script>
-if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})})}
+(function(){
+  var f=document.getElementById('checkForm'), btn=document.getElementById('checkBtn');
+  var msg=document.getElementById('checkMsg'), box=document.getElementById('checkResult');
+  var birth=document.getElementById('c-birth');
+  birth.addEventListener('input',function(){birth.value=birth.value.replace(/\D/g,'').slice(0,6)});
+  function say(t,ok){msg.textContent=t;msg.className='msg '+(ok?'ok':'err')}
+  function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
+  var CHIP={'수료':'done','진행 중':'doing','미수료':'todo','대상 아님':'na'};
+  function render(list){
+    box.innerHTML='';
+    box.appendChild(el('h3',null,'조회 결과'));
+    var done=list.filter(function(x){return x.status==='수료'}).length;
+    var need=list.filter(function(x){return x.status!=='대상 아님'}).length;
+    box.appendChild(el('p','hint','대상 과정 '+need+'개 중 '+done+'개 수료'));
+    var ul=el('ul');
+    list.forEach(function(x){
+      var li=el('li'), left=el('div');
+      left.appendChild(el('b',null,x.course));
+      if(x.date) left.appendChild(el('small',null,'수료일 '+x.date));
+      li.appendChild(left);
+      li.appendChild(el('span','chip '+(CHIP[x.status]||'na'),x.status));
+      ul.appendChild(li);
+    });
+    box.appendChild(ul);
+  }
+  function reset(){box.innerHTML='';box.appendChild(el('h3',null,'조회 결과'));box.appendChild(el('p','hint','일치하는 결과가 없습니다.'))}
+  f.addEventListener('submit',async function(e){
+    e.preventDefault();
+    var name=f.name.value.trim(), b=birth.value.trim();
+    if(!name){say('이름을 입력해 주세요.');f.name.focus();return}
+    if(!/^\d{6}$/.test(b)){say('생년월일은 숫자 6자리로 입력해 주세요. (예: 900115)');birth.focus();return}
+    btn.disabled=true;btn.textContent='조회 중…';say('',true);
+    try{
+      var r=await fetch('/api/completion',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,birth:b})});
+      var j=await r.json().catch(function(){return {}});
+      if(r.ok&&j.ok&&Array.isArray(j.result)){render(j.result);say('조회했습니다.',true)}
+      else{reset();say(j.error||'조회하지 못했습니다. 잠시 후 다시 시도해 주세요.')}
+    }catch(err){say('연결이 원활하지 않습니다. 잠시 후 다시 시도해 주세요.')}
+    finally{btn.disabled=false;btn.textContent='수료 현황 조회'}
+  });
+})();
+</script>
+<script>
+if('serviceWorker in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})})}
 </script>
 </body>
 </html>
