@@ -26,3 +26,8 @@ create index if not exists lookup_attempts_recent on public.lookup_attempts (ip_
 -- 외부에서 직접 읽거나 쓰지 못하게 잠급니다. (사이트 서버만 비밀 키로 접근)
 alter table public.completions enable row level security;
 alter table public.lookup_attempts enable row level security;
+
+-- 사이트 서버(service_role)만 읽고 쓸 수 있게 권한을 줍니다. (새 표에는 자동으로 붙지 않음)
+grant select, insert, update, delete on public.completions to service_role;
+grant select, insert, delete on public.lookup_attempts to service_role;
+notify pgrst, 'reload schema';
