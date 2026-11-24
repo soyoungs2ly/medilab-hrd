@@ -3,13 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>메디랩코리아(주) | 자사 교육 사이트</title>
-<meta name="description" content="메디랩코리아(주) 인사팀 자사 교육 사이트">
+<title>메디랩코리아(주) | 사내 교육 시스템</title>
+<meta name="description" content="메디랩코리아(주) 인사팀 사내 교육 시스템">
+<meta name="theme-color" content="#17744c">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="사내 교육">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
   :root{
-    --green:#1f8a5b; --green-dark:#146b45; --green-soft:#e8f5ee; --green-line:#bfe3cf;
+    --green:#17744c; --green-dark:#0f5a39; --green-soft:#e8f5ee; --green-line:#bfe3cf;
     --ink:#1d2621; --sub:#5b6660; --line:#e4e8e5; --gray-box:#f4f6f5; --white:#fff;
     --radius:14px; --max:1120px;
   }
@@ -38,7 +44,7 @@
   .btn:hover{background:var(--green-dark)}
   .btn-ghost{background:var(--white);color:var(--green);border:1.5px solid var(--green-line);margin-left:8px}
   .btn-ghost:hover{background:var(--green-soft)}
-  .photo{background:#d5d9d7;border-radius:20px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;color:#7a827e;font-size:15px;font-weight:600}
+  .photo{background:#d5d9d7;border-radius:20px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;color:#3f4743;font-size:15px;font-weight:600}
 
   section{scroll-margin-top:72px}
   .sec{padding:80px 0}
@@ -52,10 +58,12 @@
   .num{font-size:15px;font-weight:800;color:var(--green);background:var(--green-soft);width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
   .card h3{font-size:20px;font-weight:700;margin-bottom:8px}
   .card p{color:var(--sub);font-size:15px}
-  .card .card-photo{background:#d5d9d7;border-radius:10px;aspect-ratio:16/9;margin-top:18px;display:flex;align-items:center;justify-content:center;color:#7a827e;font-size:13px}
+  .card .card-photo{background:#d5d9d7;border-radius:10px;aspect-ratio:16/9;margin-top:18px;display:flex;align-items:center;justify-content:center;color:#3f4743;font-size:13px}
+  .illus{background:none;overflow:hidden;padding:0}
+  .illus svg{width:100%;height:100%;display:block}
 
-  .info{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-  .info-box{background:var(--white);border-radius:var(--radius);padding:26px;border:1px solid var(--line)}
+  .info{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+  .info-box{background:var(--gray-box);border-radius:var(--radius);padding:26px}
   .info-box .label{font-size:14px;font-weight:700;color:var(--green);margin-bottom:6px}
   .info-box .value{font-size:17px;font-weight:600}
 
@@ -67,13 +75,14 @@
   .field label{display:block;font-weight:700;font-size:15px;margin-bottom:6px}
   .field label .req{color:var(--green)}
   .field input,.field textarea{width:100%;font:inherit;font-size:16px;padding:13px 14px;border:1.5px solid var(--line);border-radius:10px;background:var(--white);color:var(--ink)}
-  .field input:focus,.field textarea:focus{outline:none;border-color:var(--green)}
+  .field input:focus,.field textarea:focus{outline:2px solid var(--green);outline-offset:1px;border-color:var(--green)}
+  a:focus-visible,button:focus-visible,.agree input:focus-visible{outline:3px solid var(--green);outline-offset:3px}
   .field textarea{min-height:140px;resize:vertical}
   .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   .count{text-align:right;font-size:13px;color:var(--sub);margin-top:4px}
   .agree{background:var(--gray-box);border-radius:10px;padding:14px 16px;font-size:14px;color:var(--sub);margin-bottom:18px}
-  .agree label{display:flex;gap:10px;align-items:flex-start;color:var(--ink);font-weight:600;margin-top:8px;cursor:pointer}
-  .agree input{width:18px;height:18px;margin-top:3px;accent-color:var(--green)}
+  .agree label{display:flex;gap:10px;align-items:flex-start;color:var(--ink);font-weight:500;cursor:pointer}
+  .agree input{flex:none;width:20px;height:20px;margin-top:3px;accent-color:var(--green)}
   .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
   .form-btn{width:100%;justify-content:center}
   .form-btn[disabled]{opacity:.6;cursor:wait}
@@ -83,12 +92,11 @@
   footer{background:#17201b;color:#b9c4be;padding:40px 0;font-size:14px}
   footer b{color:var(--white);font-size:16px;display:block;margin-bottom:8px}
 
-  .float{position:fixed;right:22px;bottom:22px;z-index:30;background:var(--green);color:var(--white);font-weight:700;padding:15px 22px;border-radius:999px;box-shadow:0 8px 24px rgba(20,107,69,.28);display:flex;align-items:center;gap:8px}
-  .float:hover{background:var(--green-dark)}
 
   @media (max-width:900px){
     .hero-grid,.form-grid{grid-template-columns:1fr}
-    .cards,.info{grid-template-columns:1fr 1fr}
+    .cards{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .card{padding:22px 18px}
   }
   @media (max-width:640px){
     .menu a:not(.menu-cta){display:none}
@@ -96,10 +104,11 @@
     .hero p{font-size:16px}
     .btn{width:100%;justify-content:center}
     .btn-ghost{margin:10px 0 0}
-    .cards,.info,.two{grid-template-columns:1fr}
+    .cards,.two{grid-template-columns:1fr}
+    .info{gap:10px}
+    .info-box{padding:18px 16px}
     .sec{padding:56px 0}
     form{padding:22px}
-    .float{right:14px;bottom:14px;padding:13px 18px}
   }
 </style>
 </head>
@@ -108,7 +117,7 @@
 <header>
   <div class="wrap nav">
     <a href="#top" class="logo">메디랩코리아<span>(주)</span></a>
-    <nav class="menu">
+    <nav class="menu" aria-label="주요 메뉴">
       <a href="#courses">교육과정</a>
       <a href="#guide">교육 안내</a>
       <a href="#contact" class="menu-cta">문의하기</a>
@@ -121,37 +130,159 @@
     <div class="wrap hero-grid">
       <div>
         <span class="eyebrow">메디랩코리아(주) 인사팀</span>
-        <h1>자사 교육<br><em>사이트</em></h1>
+        <h1>사내 교육<br><em>시스템</em></h1>
         <p>(입력 필요: 사이트 소개 문장)</p>
-        <a href="#contact" class="btn">교육 문의하기 →</a>
+        <a href="#contact" class="btn">교육 문의하기 <span aria-hidden="true">→</span></a>
         <a href="#courses" class="btn btn-ghost">교육과정 보기</a>
       </div>
-      <div class="photo" role="img" aria-label="사진 자리">사진 자리</div>
+      <div class="photo illus">
+<svg preserveAspectRatio="xMidYMid slice" viewBox="0 0 800 600" role="img" aria-label="교육장에서 강사가 화면을 가리키며 직원들에게 설명하는 모습">
+<defs>
+<linearGradient id="hw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3faf6"/><stop offset="1" stop-color="#e3f2e9"/></linearGradient>
+<linearGradient id="hs" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f1f7f3"/></linearGradient>
+</defs>
+<rect width="800" height="600" fill="url(#hw)"/>
+<rect y="440" width="800" height="160" fill="#d3eadc"/>
+<rect y="440" width="800" height="6" fill="#c2e0ce"/>
+<!-- lamps -->
+<g stroke="#9fc9b1" stroke-width="2"><line x1="230" y1="0" x2="230" y2="34"/><line x1="560" y1="0" x2="560" y2="34"/></g>
+<path d="M206 34h48l-10 18h-28z" fill="#17744c"/><path d="M536 34h48l-10 18h-28z" fill="#17744c"/>
+<ellipse cx="230" cy="54" rx="10" ry="3" fill="#ffe9a8"/><ellipse cx="560" cy="54" rx="10" ry="3" fill="#ffe9a8"/>
+<!-- screen -->
+<rect x="112" y="92" width="440" height="268" rx="16" fill="#bfdccb"/>
+<rect x="100" y="80" width="440" height="268" rx="16" fill="url(#hs)" stroke="#17744c" stroke-width="4"/>
+<rect x="128" y="106" width="150" height="14" rx="7" fill="#17744c"/>
+<rect x="128" y="130" width="96" height="10" rx="5" fill="#bfdccb"/>
+<g fill="#cfe9da"><rect x="140" y="252" width="40" height="66" rx="5"/><rect x="196" y="226" width="40" height="92" rx="5"/></g>
+<g fill="#2f9e6b"><rect x="252" y="200" width="40" height="118" rx="5"/></g>
+<rect x="308" y="170" width="40" height="148" rx="5" fill="#17744c"/>
+<line x1="128" y1="320" x2="370" y2="320" stroke="#9fc9b1" stroke-width="3"/>
+<polyline points="160,236 216,214 272,186 328,150" fill="none" stroke="#f0a93b" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<g fill="#fff" stroke="#f0a93b" stroke-width="4"><circle cx="160" cy="236" r="6"/><circle cx="216" cy="214" r="6"/><circle cx="272" cy="186" r="6"/><circle cx="328" cy="150" r="7"/></g>
+<circle cx="458" cy="196" r="54" fill="none" stroke="#e3f2e9" stroke-width="20"/>
+<circle cx="458" cy="196" r="54" fill="none" stroke="#17744c" stroke-width="20" stroke-dasharray="254 340" transform="rotate(-90 458 196)" stroke-linecap="round"/>
+<rect x="436" y="186" width="44" height="20" rx="6" fill="#e3f2e9"/>
+<rect x="404" y="276" width="108" height="10" rx="5" fill="#bfdccb"/><rect x="420" y="296" width="76" height="10" rx="5" fill="#e3f2e9"/>
+<rect x="306" y="348" width="28" height="70" fill="#9fc9b1"/><rect x="262" y="414" width="116" height="12" rx="6" fill="#9fc9b1"/>
+<!-- presenter -->
+<ellipse cx="652" cy="446" rx="62" ry="10" fill="#bcdcc8"/>
+<rect x="628" y="350" width="20" height="94" rx="9" fill="#1d2621"/><rect x="656" y="350" width="20" height="94" rx="9" fill="#26332c"/>
+<path d="M616 250q0-30 36-30q36 0 36 30v112h-72z" fill="#17744c"/>
+<path d="M652 220q36 0 36 30v112h-24v-142z" fill="#146b45"/>
+<path d="M642 222l10 26 10-26z" fill="#ffffff"/>
+<path d="M622 246L560 196" stroke="#17744c" stroke-width="20" stroke-linecap="round"/>
+<circle cx="556" cy="192" r="11" fill="#f2c9a5"/>
+<path d="M682 252l10 70" stroke="#146b45" stroke-width="20" stroke-linecap="round"/>
+<circle cx="694" cy="328" r="10" fill="#f2c9a5"/>
+<rect x="642" y="196" width="20" height="22" rx="6" fill="#e9b892"/>
+<circle cx="652" cy="176" r="30" fill="#f2c9a5"/>
+<path d="M622 174q0-34 32-34q30 0 30 28q-18-14-44-8q-10 4-18 14z" fill="#2b2622"/>
+<circle cx="662" cy="178" r="3" fill="#2b2622"/><path d="M656 192q8 6 14 0" stroke="#b5654a" stroke-width="3" fill="none" stroke-linecap="round"/>
+<!-- plant -->
+<path d="M30 440l8-58h52l8 58z" fill="#f0a93b"/><rect x="34" y="376" width="60" height="12" rx="4" fill="#e09627"/>
+<g fill="#2f9e6b"><ellipse cx="50" cy="330" rx="14" ry="40" transform="rotate(-24 50 330)"/><ellipse cx="80" cy="322" rx="14" ry="46" transform="rotate(20 80 322)"/></g>
+<ellipse cx="64" cy="300" rx="12" ry="48" fill="#17744c"/>
+<!-- audience from behind -->
+<g>
+<rect x="0" y="520" width="800" height="80" fill="#ffffff"/><rect x="0" y="520" width="800" height="8" fill="#e3f2e9"/>
+<path d="M120 600v-56q0-36 50-36q50 0 50 36v56z" fill="#f0a93b"/><path d="M170 508q50 0 50 36v56h-50z" fill="#e09627"/>
+<circle cx="170" cy="472" r="34" fill="#3a2e28"/><path d="M140 478q30 14 60 0v-4q-30 10-60 0z" fill="#2b2622"/>
+<path d="M330 600v-60q0-38 56-38q56 0 56 38v60z" fill="#2f9e6b"/><path d="M386 502q56 0 56 38v60h-56z" fill="#24875a"/>
+<circle cx="386" cy="462" r="36" fill="#1f1b18"/>
+<path d="M560 600v-54q0-34 48-34q48 0 48 34v54z" fill="#5b8ca8"/><path d="M608 512q48 0 48 34v54h-48z" fill="#4b7892"/>
+<circle cx="608" cy="476" r="32" fill="#6b4a36"/><path d="M576 470q0-30 32-30q32 0 32 30q-14-12-32-12q-18 0-32 12z" fill="#5a3d2c"/>
+<rect x="250" y="548" width="56" height="38" rx="4" fill="#26332c"/><rect x="474" y="550" width="56" height="36" rx="4" fill="#26332c"/>
+<rect x="256" y="552" width="44" height="28" rx="2" fill="#cfe9da"/><rect x="480" y="554" width="44" height="26" rx="2" fill="#cfe9da"/>
+</g>
+</svg>
+</div>
     </div>
   </section>
 
   <section id="courses" class="sec sec-gray">
     <div class="wrap">
       <h2 class="sec-title">교육과정</h2>
-      <p class="sec-desc">(입력 필요: 교육과정 안내 문장)</p>
+      <p class="sec-desc">교육은 리더십 과정, 신입 사원 과정, 법정교육 3가지로 나뉩니다.</p>
       <div class="cards">
         <article class="card">
           <div class="num">01</div>
-          <h3>(입력 필요: 과정명)</h3>
-          <p>(입력 필요: 과정 설명)</p>
-          <div class="card-photo">사진 자리</div>
+          <h3>리더십 과정</h3>
+          <p>팀을 이끄는 리더에게 필요한 역할과 소통 방법을 배웁니다.</p>
+          <div class="card-photo illus">
+<svg preserveAspectRatio="xMidYMid slice" viewBox="0 0 640 360" role="img" aria-label="직원들이 테이블에 모여 의견을 나누는 모습">
+<rect width="640" height="360" fill="#f3faf6"/>
+<rect x="190" y="36" width="260" height="120" rx="10" fill="#ffffff" stroke="#bfdccb" stroke-width="4"/>
+<g fill="#cfe9da"><rect x="212" y="58" width="64" height="40" rx="6"/><rect x="288" y="58" width="64" height="40" rx="6" fill="#ffe3a8"/><rect x="364" y="58" width="64" height="40" rx="6" fill="#bfe3cf"/></g>
+<path d="M226 128h60M300 128h40" stroke="#17744c" stroke-width="6" stroke-linecap="round"/>
+<path d="M370 120l12 12 24-26" stroke="#17744c" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<!-- people -->
+<path d="M70 300v-60q0-34 46-34q46 0 46 34v60z" fill="#f0a93b"/><circle cx="116" cy="178" r="28" fill="#f2c9a5"/><path d="M88 176q0-30 28-30q28 0 28 26q-28-12-56 4z" fill="#3a2e28"/>
+<path d="M478 300v-60q0-34 46-34q46 0 46 34v60z" fill="#5b8ca8"/><circle cx="524" cy="178" r="28" fill="#e9b892"/><path d="M496 172q2-28 30-28q26 2 26 30q-6-16-28-16q-18 0-28 14z" fill="#1f1b18"/>
+<path d="M274 300v-56q0-30 46-30q46 0 46 30v56z" fill="#17744c"/><circle cx="320" cy="190" r="26" fill="#f2c9a5"/><path d="M294 192q-4-34 28-34q30 2 24 34q-4-18-26-18q-20 0-26 18z" fill="#6b4a36"/>
+<!-- speech bubbles -->
+<path d="M142 120h84q10 0 10 10v30q0 10-10 10h-56l-16 14v-14h-12q-10 0-10-10v-30q0-10 10-10z" fill="#17744c"/>
+<g fill="#ffffff"><circle cx="164" cy="146" r="5"/><circle cx="184" cy="146" r="5"/><circle cx="204" cy="146" r="5"/></g>
+<g transform="translate(0,-16)"><path d="M418 112h90q10 0 10 10v32q0 10-10 10h-12v14l-16-14h-62q-10 0-10-10v-32q0-10 10-10z" fill="#f0a93b"/>
+<path d="M444 138l10 10 22-22" stroke="#ffffff" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<!-- table -->
+<ellipse cx="320" cy="342" rx="300" ry="22" fill="#d3eadc"/>
+<path d="M40 292h560l-20 40H60z" fill="#ffffff"/><rect x="40" y="286" width="560" height="10" rx="5" fill="#e4e8e5"/>
+<rect x="150" y="270" width="70" height="20" rx="3" fill="#cfe9da"/><rect x="420" y="272" width="64" height="18" rx="3" fill="#ffe3a8"/>
+<rect x="296" y="262" width="20" height="28" rx="4" fill="#ffffff" stroke="#17744c" stroke-width="3"/>
+</svg>
+</div>
         </article>
         <article class="card">
           <div class="num">02</div>
-          <h3>(입력 필요: 과정명)</h3>
-          <p>(입력 필요: 과정 설명)</p>
-          <div class="card-photo">사진 자리</div>
+          <h3>신입 사원 과정</h3>
+          <p>입사 후 회사 생활과 업무에 빠르게 적응하도록 돕습니다.</p>
+          <div class="card-photo illus">
+<svg preserveAspectRatio="xMidYMid slice" viewBox="0 0 640 360" role="img" aria-label="노트북으로 온라인 강의를 듣는 모습">
+<rect width="640" height="360" fill="#e8f5ee"/>
+<circle cx="560" cy="64" r="90" fill="#d6eee0"/><circle cx="70" cy="320" r="70" fill="#d6eee0"/>
+<ellipse cx="320" cy="318" rx="220" ry="16" fill="#c6e3d2"/>
+<rect x="168" y="70" width="304" height="196" rx="14" fill="#1d2621"/>
+<rect x="182" y="84" width="276" height="168" rx="6" fill="#ffffff"/>
+<rect x="182" y="84" width="276" height="120" rx="6" fill="#2f9e6b"/>
+<path d="M182 170q70-40 140-10t136-20v64H182z" fill="#24875a"/>
+<circle cx="320" cy="144" r="30" fill="#ffffff"/><path d="M311 128v32l26-16z" fill="#17744c"/>
+<rect x="196" y="218" width="248" height="8" rx="4" fill="#e3f2e9"/><rect x="196" y="218" width="150" height="8" rx="4" fill="#f0a93b"/><circle cx="346" cy="222" r="8" fill="#f0a93b"/>
+<rect x="196" y="234" width="80" height="8" rx="4" fill="#cfe9da"/>
+<path d="M130 266h380l-22 34H152z" fill="#c9d3ce"/><path d="M130 266h380v8H130z" fill="#e4e8e5"/><rect x="290" y="268" width="60" height="6" rx="3" fill="#b3bfb9"/>
+<rect x="496" y="200" width="58" height="72" rx="10" fill="#ffffff" stroke="#17744c" stroke-width="4"/><path d="M554 216h12q12 0 12 14t-12 14h-12" fill="none" stroke="#17744c" stroke-width="4"/>
+<path d="M512 188q6-12 0-22M530 188q6-12 0-22" stroke="#9fc9b1" stroke-width="4" fill="none" stroke-linecap="round"/>
+<rect x="74" y="196" width="72" height="80" rx="6" fill="#f0a93b"/><rect x="82" y="204" width="56" height="10" rx="5" fill="#fff3d9"/><rect x="82" y="222" width="40" height="8" rx="4" fill="#fff3d9"/>
+</svg>
+</div>
         </article>
         <article class="card">
           <div class="num">03</div>
-          <h3>(입력 필요: 과정명)</h3>
-          <p>(입력 필요: 과정 설명)</p>
-          <div class="card-photo">사진 자리</div>
+          <h3>법정교육</h3>
+          <p>법으로 정해진, 모든 직원이 받아야 하는 의무교육입니다.</p>
+          <div class="card-photo illus">
+<svg preserveAspectRatio="xMidYMid slice" viewBox="0 0 640 360" role="img" aria-label="교육 체크리스트와 수료 배지">
+<rect width="640" height="360" fill="#e8f5ee"/>
+<circle cx="90" cy="70" r="80" fill="#d6eee0"/><circle cx="590" cy="300" r="90" fill="#d6eee0"/>
+<ellipse cx="300" cy="330" rx="170" ry="12" fill="#c6e3d2"/>
+<rect x="196" y="56" width="216" height="268" rx="14" fill="#bfdccb"/>
+<rect x="186" y="46" width="216" height="268" rx="14" fill="#ffffff" stroke="#17744c" stroke-width="4"/>
+<rect x="252" y="32" width="84" height="30" rx="8" fill="#17744c"/><circle cx="294" cy="40" r="6" fill="#e8f5ee"/>
+<g stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+<rect x="212" y="94" width="26" height="26" rx="6" fill="#17744c" stroke="#17744c"/><path d="M218 107l6 6 10-12" stroke="#ffffff"/>
+<rect x="212" y="146" width="26" height="26" rx="6" fill="#17744c" stroke="#17744c"/><path d="M218 159l6 6 10-12" stroke="#ffffff"/>
+<rect x="212" y="198" width="26" height="26" rx="6" fill="#17744c" stroke="#17744c"/><path d="M218 211l6 6 10-12" stroke="#ffffff"/>
+<rect x="212" y="250" width="26" height="26" rx="6" stroke="#bfdccb"/>
+</g>
+<g fill="#cfe9da"><rect x="252" y="100" width="124" height="12" rx="6"/><rect x="252" y="152" width="100" height="12" rx="6"/><rect x="252" y="204" width="116" height="12" rx="6"/><rect x="252" y="256" width="88" height="12" rx="6" fill="#e4e8e5"/></g>
+<!-- badge -->
+<path d="M446 214l-18 74 26-12 14 24 12-62z" fill="#17744c"/><path d="M490 214l18 74-26-12-14 24-12-62z" fill="#146b45"/>
+<circle cx="468" cy="186" r="56" fill="#f0a93b"/><circle cx="468" cy="186" r="42" fill="#ffd27a"/>
+<path d="M468 156l9 19 21 3-15 14 4 21-19-10-19 10 4-21-15-14 21-3z" fill="#e09627"/>
+<!-- pencil -->
+<g transform="rotate(-38 130 220)"><rect x="80" y="210" width="110" height="20" rx="3" fill="#f0a93b"/><rect x="80" y="210" width="18" height="20" fill="#e4e8e5"/><path d="M190 210l24 10-24 10z" fill="#f2c9a5"/><path d="M206 217l8 3-8 3z" fill="#1d2621"/></g>
+</svg>
+</div>
         </article>
       </div>
     </div>
@@ -162,17 +293,13 @@
       <h2 class="sec-title">교육 안내</h2>
       <p class="sec-desc">교육 대상과 진행 방법을 확인해 주세요.</p>
       <div class="info">
-        <div class="info-box" style="background:var(--gray-box);border:0">
+        <div class="info-box">
           <div class="label">교육 대상</div>
           <div class="value">(입력 필요)</div>
         </div>
-        <div class="info-box" style="background:var(--gray-box);border:0">
+        <div class="info-box">
           <div class="label">진행 방법</div>
           <div class="value">(입력 필요)</div>
-        </div>
-        <div class="info-box" style="background:var(--gray-box);border:0">
-          <div class="label">담당 부서</div>
-          <div class="value">인사팀</div>
         </div>
       </div>
     </div>
@@ -213,8 +340,7 @@
           <input id="website" name="website" tabindex="-1" autocomplete="off">
         </div>
         <div class="agree">
-          수집 항목: 이름, 소속, 연락처, 문의 내용 · 목적: 교육 문의 답변 · 보관 기간: (입력 필요)
-          <label><input type="checkbox" id="agree" name="agree"> 개인정보 수집·이용에 동의합니다 (필수)</label>
+          <label><input type="checkbox" id="agree" name="agree" required> <span>(필수) 문의 답변을 위해 이름·소속·연락처·문의 내용을 수집하며, 보관 기간 (입력 필요) 후 파기하는 데 동의합니다.</span></label>
         </div>
         <button type="submit" class="btn form-btn" id="submitBtn">문의 보내기</button>
         <p class="msg" id="formMsg" role="status" aria-live="polite"></p>
@@ -226,12 +352,10 @@
 <footer>
   <div class="wrap">
     <b>메디랩코리아(주)</b>
-    인사팀 · 이메일 soyoungs2ly@gmail.com · 전화 (입력 필요)<br>
+    인사팀<br>
     © 메디랩코리아(주)
   </div>
 </footer>
-
-<a href="#contact" class="float" aria-label="문의하기">문의하기</a>
 
 <script>
 (function(){
@@ -259,7 +383,7 @@
     if(!d.phone){show('연락처를 입력해 주세요.');form.phone.focus();return}
     if(!/^[0-9\-+ ()]{7,20}$/.test(d.phone)){show('연락처는 숫자와 하이픈(-)으로 입력해 주세요.');form.phone.focus();return}
     if(!d.message){show('문의 내용을 입력해 주세요.');form.message.focus();return}
-    if(!d.agree){show('개인정보 수집·이용에 동의해 주세요.');return}
+    if(!d.agree){show('개인정보 수집·이용에 동의해 주세요.');form.agree.focus();return}
 
     btn.disabled=true;btn.textContent='보내는 중…';show('',true);
     try{
@@ -268,9 +392,12 @@
       if(r.ok&&j.ok){show('문의가 접수되었습니다. 확인 후 연락드리겠습니다.',true);form.reset();document.getElementById('cnt').textContent='0';startedAt=Date.now()}
       else{show(j.error||'접수하지 못했습니다. 잠시 후 다시 시도해 주세요.')}
     }catch(err){show('연결이 원활하지 않습니다. 잠시 후 다시 시도해 주세요.')}
-    btn.disabled=false;btn.textContent='문의 보내기';
+    finally{btn.disabled=false;btn.textContent='문의 보내기'}
   });
 })();
+</script>
+<script>
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})})}
 </script>
 </body>
 </html>
