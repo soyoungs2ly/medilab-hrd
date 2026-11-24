@@ -52,14 +52,16 @@ module.exports = async (req, res) => {
 
   const name = clean(b.name, LIMITS.name);
   const dept = clean(b.dept, LIMITS.dept);
-  const phone = clean(b.phone, LIMITS.phone);
+  // 연락처는 숫자·기호만 허용하므로 앞에 ' 를 붙이지 않고 검사합니다.
+  const phoneRaw = typeof b.phone === 'string' ? b.phone.trim() : '';
+  const phone = phoneRaw.length > LIMITS.phone ? null : phoneRaw;
   const message = clean(b.message, LIMITS.message);
 
   if (name === null || dept === null || phone === null || message === null) {
     return send(400, { ok: false, error: '입력할 수 있는 글자 수를 넘었습니다.' });
   }
   if (!name) return send(400, { ok: false, error: '이름을 입력해 주세요.' });
-  if (!phone || !/^'?[0-9\-+ ()]{7,20}$/.test(phone)) return send(400, { ok: false, error: '연락처를 올바르게 입력해 주세요.' });
+  if (!phone || !/^[0-9\-+ ()]{7,20}$/.test(phone)) return send(400, { ok: false, error: '연락처를 올바르게 입력해 주세요.' });
   if (!message) return send(400, { ok: false, error: '문의 내용을 입력해 주세요.' });
   if (b.agree !== true) return send(400, { ok: false, error: '개인정보 수집·이용에 동의해 주세요.' });
 
@@ -70,9 +72,14 @@ module.exports = async (req, res) => {
     const cr = await fetch(base + '?select=id&created_at=gte.' + encodeURIComponent(kstMidnightIso()), {
       headers: sbHeaders(SUPABASE_SECRET_KEY, { Prefer: 'count=exact', Range: '0-0' })
     });
+    // 개수를 확인하지 못하면 한도 검사를 건너뛰지 않고 접수를 멈춥니다.
+    if (!cr.ok) {
+      console.error('supabase count failed', cr.status, await cr.text());
+      return send(503, { ok: false, error: '접수 중 문제가 생겼습니다. 잠시 후 다시 시도해 주세요.' });
+    }
     const range = cr.headers.get('content-range') || '';
-    const today = Number(range.split('/')[1] || 0);
-    if (today >= DAILY_LIMIT) {
+    const today = Number(range.split('/')[1]);
+    if (!Number.isFinite(today) || today >= DAILY_LIMIT) {
       return send(429, { ok: false, error: '오늘 접수 가능한 문의가 마감되었습니다. 내일 다시 보내 주세요.' });
     }
 
@@ -100,7 +107,7 @@ module.exports = async (req, res) => {
         body: JSON.stringify({
           from: '메디랩코리아 홈페이지 <onboarding@resend.dev>',
           to: [NOTIFY_EMAIL],
-          subject: '[홈페이지 문의] ' + name + '님',
+          subject: '[사내 교육 문의] ' + name.replace(/[\r\n]+/g, ' ') + '님',
           html:
             '<h2>새 교육 문의가 접수되었습니다</h2>' +
             '<p><b>이름</b>: ' + esc(name) + '<br><b>소속</b>: ' + esc(dept || '-') +
